@@ -1,0 +1,65 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "Огурцы",
+        "description": "Огурцы тепличные ORGANIC, вкусные органические натуральные огурцы",
+        "photo": "",
+        "category": 1,
+        "purchase_price": "525.00",
+        "created_at": "2025-05-03",
+        "updated_at": "2025-05-03T18:27:06.381Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Яблоки",
+        "description": "Яблоки привлекателные во всех отношениях",
+        "photo": "",
+        "category": 2,
+        "purchase_price": "150.00",
+        "created_at": "2025-05-03",
+        "updated_at": "2025-05-03T18:38:40.544Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Голубика",
+        "description": "Наша голубика не только вкусная, но и невероятно полезная",
+        "photo": "",
+        "category": 3,
+        "purchase_price": "495.00",
+        "created_at": "2025-05-03",
+        "updated_at": "2025-05-03T18:29:16.349Z"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "name": "Овощи",
+        "description": "Свежие и вкусные натуральные овощи"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Фрукты",
+        "description": "Вкусные свежие фрукты из экологически чистых мест"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+        "name": "Ягоды",
+        "description": "Полезные и натуральные, ароматные ягоды, богатые витаминами"
+    }
+}
+]
