@@ -71,3 +71,30 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
+
+
+class ContactInfo(models.Model):
+    name = models.CharField(
+        max_length=150,
+        verbose_name="Имя",
+        help_text='Введите имя'
+    )
+    email = models.EmailField(
+        verbose_name="Email",
+        default='example@example.com',
+        help_text='Введите почту',
+    )
+    phone = models.CharField(
+        max_length=20,
+        verbose_name="Телефон",
+        help_text='Введите телефон',
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return f"Контактная информация: \n{self.name}, \n{self.email}, \n{self.phone})"
+
+    class Meta:
+        verbose_name = "Контактная информация"
+        verbose_name_plural = "Контактная информация"

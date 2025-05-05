@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Контактная информация</title>
+</head>
+    <body>
+        <h1>Контактная информация</h1>
+        {% if contacts %}
+            <ul>
+                {% for contact in contacts %}
+                    <li>{{ contact.name }}, {{ contact.email }}, {{ contact.phone }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Контактная информация не найдена.</p>
+        {% endif %}
+    </body>
+</html>
