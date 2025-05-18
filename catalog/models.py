@@ -93,7 +93,7 @@ class ContactInfo(models.Model):
     )
 
     def __str__(self):
-        return f"Контактная информация: \n{self.name}, \n{self.email}, \n{self.phone})"
+        return f"Контактная информация: {self.name}, {self.email}, {self.phone or 'тел. не указан'}"
 
     class Meta:
         verbose_name = "Контактная информация"

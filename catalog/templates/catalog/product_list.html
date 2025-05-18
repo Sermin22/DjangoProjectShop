@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 
 {% load my_tags %}
 
@@ -6,12 +6,12 @@
 
 {% block content %}
 
-    {% include 'includes/header.html' %}
+    {% include 'catalog/includes/header.html' %}
     <h3>Список продуктов:</h3>
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for product in products %}
+                {% for product in product_list %}
                 <div class="col">
                     <div class="card shadow-sm h-100 d-flex flex-column">
                         <img src="{{ product.photo | media_filter }}" alt="{{ product.name }}" class="card-img-top">
