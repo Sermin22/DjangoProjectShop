@@ -7,11 +7,11 @@
 {% block content %}
 
     {% include 'includes/header.html' %}
-    <h3>Последние 5 продуктов:</h3>
+    <h3>Список продуктов:</h3>
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for product in latest_products %}
+                {% for product in products %}
                 <div class="col">
                     <div class="card shadow-sm h-100 d-flex flex-column">
                         <img src="{{ product.photo | media_filter }}" alt="{{ product.name }}" class="card-img-top">
@@ -24,9 +24,7 @@
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Посмотреть</button>
                                     </a>
                                 </div>
-                                <small class="text-body-secondary">Есть</small>
-                            </div>
-
+                                <small class="text-body-secondary">Есть</small></div>
                         </div>
                     </div>
                 </div>
@@ -36,19 +34,3 @@
     </div>
 
 {% endblock %}
-
-<!--<h3>Последние 5 продуктов:</h3>-->
-<!--{% if latest_products %}-->
-<!--    <ul>-->
-<!--        {% for product in latest_products %}-->
-<!--            <li>{{ product.name }} (создан {{ product.created_at }})</li>-->
-<!--        {% endfor %}-->
-<!--    </ul>-->
-<!--{% else %}-->
-<!--    <p>Продукты не найдены.</p>-->
-<!--{% endif %}-->
-
-
-
-
-
