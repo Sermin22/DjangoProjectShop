@@ -14,6 +14,7 @@ class HomeView(TemplateView):
 
 
 class ContactsView(View):
+
     def get(self, request):
         return render(request, 'catalog/contacts.html')
 
@@ -41,7 +42,7 @@ class MainView(ListView):
 
     def get_queryset(self):
         queryset = Product.objects.order_by('-created_at')[:5]
-        # Печать результатов в консоль (аналог print в FBV)
+        # Печать результатов в консоль
         for product in queryset:
             print(f"{product.name}, Created at {product.created_at}")
         return queryset
@@ -83,7 +84,6 @@ class ContactInfoListView(ListView):
     model = ContactInfo
     template_name = 'catalog/contact.html'
     context_object_name = 'contacts'
-
 
 # def contact(request):
 #     contacts = ContactInfo.objects.all()  # Берём все зарегистрированные данные контактной информации
