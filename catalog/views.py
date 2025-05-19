@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Product, ContactInfo
 from django.views.generic import TemplateView
 from django.views import View
 from django.views.generic import ListView, DetailView
+# from django.shortcuts import get_object_or_404
 
 
 class HomeView(TemplateView):
@@ -59,7 +60,7 @@ class MainView(ListView):
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'catalog/product_list.html' # можно не указывать, это стандартный путь
+    template_name = 'catalog/product_list.html'  # можно не указывать, это стандартный путь
     context_object_name = 'product_list'  # можно не указывать, если использовать это
     # стандартное название в шаблоне 'product_list' или 'object_list'
 
@@ -71,8 +72,8 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'catalog/product_detail.html' # можно не указывать, этот путь ищет стандартно
-    context_object_name = 'product' # можно не указывать, это имя по умолчанию
+    template_name = 'catalog/product_detail.html'  # можно не указывать, этот путь ищет стандартно
+    context_object_name = 'product'  # можно не указывать, это имя по умолчанию
 
 # def product_detail(request, pk):
 #     product = get_object_or_404(Product, pk=pk)

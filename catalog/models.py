@@ -1,9 +1,8 @@
 from django.db import models
-from django.db.models import TextField, CASCADE, SET_NULL
+from django.db.models import TextField, SET_NULL
 
 
 class Product(models.Model):
-
     name = models.CharField(
         max_length=250,
         verbose_name="Наименование",
@@ -37,7 +36,7 @@ class Product(models.Model):
         max_digits=10,
         decimal_places=2,
         help_text='Укажите цену закупки',
-        default = 0,
+        default=0,
     )
     created_at = models.DateField(auto_now_add=True)  # Дата создания
     updated_at = models.DateTimeField(auto_now=True)  # Дата последнего изменения
@@ -52,7 +51,6 @@ class Product(models.Model):
 
 
 class Category(models.Model):
-
     name = models.CharField(
         max_length=250,
         verbose_name="Наименование",
