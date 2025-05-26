@@ -1,7 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
+
 {% load my_tags %}
+
+{% block title %}Продукт{% endblock %}
+
 {% block content %}
-    {% include 'includes/header.html' %}
+
+    {% include 'catalog/includes/header.html' %}
+
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -9,8 +15,8 @@
                     <div class="card shadow-sm">
                         <img src="{{ product.photo | media_filter }}">
                         <div class="card-body">
-                            <p class="card-text">Название: {{ product.name }}</p>
-                            <p class="card-text">Описание: {{ product.description }}</p>
+                            <p class="card-text fw-bold mb-1">{{ product.name }}</p>
+                            <p class="card-text">{{ product.description }}</p>
                             <p class="card-text">Категория: {{ product.category }}</p>
                             <p class="card-text">Цена: {{ product.purchase_price }}</p>
                             <p class="card-text">Дата создания: {{ product.created_at }}</p>

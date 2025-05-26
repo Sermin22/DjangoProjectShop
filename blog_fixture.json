@@ -1,0 +1,62 @@
+[
+{
+    "model": "blog.blogpost",
+    "pk": 1,
+    "fields": {
+        "title": "Свежий картофель нового урожая",
+        "content": "Картофель от местных фермеров уже в продаже! Богат витаминами, идеально подходит для варки и запекания. Свежий, рассыпчатый, без химии — только натуральный вкус!",
+        "preview_image": "blog/previews_images/kartofel.jpg",
+        "created_at": "2025-05-19T17:00:09.420Z",
+        "is_published": true,
+        "views_count": 1
+    }
+},
+{
+    "model": "blog.blogpost",
+    "pk": 2,
+    "fields": {
+        "title": "Сочные яблоки сорта Гала",
+        "content": "Красные ароматные яблоки Гала — отличный выбор для перекуса, выпечки и сока. Идеальный баланс сладости и хруста. Собраны вручную, без обработки пестицидами.",
+        "preview_image": "blog/previews_images/yabloki.jpg",
+        "created_at": "2025-05-19T17:01:20.830Z",
+        "is_published": true,
+        "views_count": 1
+    }
+},
+{
+    "model": "blog.blogpost",
+    "pk": 3,
+    "fields": {
+        "title": "Домашняя клубника — свежесть с грядки",
+        "content": "Ароматная, спелая клубника уже в продаже! Насыщенный вкус, насыщенный цвет и только натуральное созревание. Прямо с фермы в ваш холодильник — попробуйте!",
+        "preview_image": "blog/previews_images/klubnika.jpg",
+        "created_at": "2025-05-19T17:02:06.492Z",
+        "is_published": true,
+        "views_count": 2
+    }
+},
+{
+    "model": "blog.blogpost",
+    "pk": 4,
+    "fields": {
+        "title": "Свежая лесная голубика",
+        "content": "Натуральная голубика, собранная в экологически чистых регионах. Ягода богата антиоксидантами, витаминами и просто невероятно вкусна. Подходит для йогуртов, выпечки и заморозки.",
+        "preview_image": "blog/previews_images/golubika.jpg",
+        "created_at": "2025-05-19T17:03:54.720Z",
+        "is_published": true,
+        "views_count": 10
+    }
+},
+{
+    "model": "blog.blogpost",
+    "pk": 5,
+    "fields": {
+        "title": "Хрустящие огурцы с грядки",
+        "content": "Молодые огурцы, выращенные без химии — идеально подойдут для салатов, засолки и просто в качестве перекуса. Сочные, хрустящие, с тонкой кожицей и насыщенным ароматом.",
+        "preview_image": "blog/previews_images/ogurcy.jpg",
+        "created_at": "2025-05-19T17:04:28.906Z",
+        "is_published": true,
+        "views_count": 0
+    }
+}
+]

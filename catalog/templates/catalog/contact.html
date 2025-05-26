@@ -1,14 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 
 {% block title %}Контактная информация{% endblock %}
 
 {% block content %}
-    {% include 'includes/header.html' %}
+    {% include 'catalog/includes/header.html' %}
     <h3>Контактная информация</h3>
     {% if contacts %}
         <ul>
             {% for contact in contacts %}
-                <li>{{ contact.name }}, {{ contact.email }}, {{ contact.phone }})</li>
+                <li>{{ contact.name }}, {{ contact.email }}, {{ contact.phone }}</li>
             {% endfor %}
         </ul>
     {% else %}
