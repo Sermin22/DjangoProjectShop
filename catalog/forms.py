@@ -1,3 +1,4 @@
+from PIL import Image
 from django.forms import ModelForm, BooleanField
 from catalog.models import Product
 from django.core.exceptions import ValidationError
@@ -39,3 +40,21 @@ class ProductForm(StyleFormMixin, ModelForm):
         if price is not None and price < 0:
             raise ValidationError("Цена не может быть отрицательной.")
         return price
+
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo')
+
+        if photo:
+            # Проверка размера
+            max_size_mb = 5
+            if photo.size > max_size_mb * 1024 * 1024:
+                raise ValidationError(f"Размер изображения не должен превышать {max_size_mb} МБ.")
+
+            # открываем загруженный файл как изображение
+            img = Image.open(photo)
+            # возвращаем реальный формат изображения
+            img_format = img.format  # Например: 'JPEG', 'PNG', 'GIF', 'BMP' и т.д.
+            # проверяем соответствует ли формат 'JPEG', 'PNG', если нет, то вызываем исключение
+            if img_format not in ['JPEG', 'PNG']:
+                raise ValidationError("Допустимы только форматы JPEG или PNG.")
+        return photo
