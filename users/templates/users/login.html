@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    {% include 'catalog/includes/header.html' %}
+
+    <div class="container">
+        <h2>Вход на сайт</h2>
+        <form method="post">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                            <a href="{% url 'catalog:product_list' %}" class="btn btn-secondary">Отмена</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
