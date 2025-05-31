@@ -36,7 +36,6 @@ class Product(models.Model):
         max_digits=10,
         decimal_places=2,
         help_text='Укажите цену закупки',
-        default=0,
     )
     created_at = models.DateField(auto_now_add=True)  # Дата создания
     updated_at = models.DateTimeField(auto_now=True)  # Дата последнего изменения

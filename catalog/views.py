@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .forms import ProductForm
 from .models import Product, ContactInfo
 from django.views.generic import TemplateView
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 # from django.shortcuts import get_object_or_404
 
 
@@ -79,6 +81,29 @@ class ProductDetailView(DetailView):
 #     product = get_object_or_404(Product, pk=pk)
 #     context = {"product": product}
 #     return render(request, 'catalog/product_detail.html', context)
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'catalog/product_form.html'
+    success_url = reverse_lazy('catalog:product_list')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'catalog/product_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:product_detail', kwargs={'pk': self.object.pk})
+        # или args=[self.kwargs.get('pk')]
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'catalog/product_confirm_delete.html'
+    success_url = reverse_lazy('catalog:product_list')
 
 
 class ContactInfoListView(ListView):

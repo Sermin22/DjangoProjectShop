@@ -8,6 +8,18 @@
 
     {% include 'catalog/includes/header.html' %}
 
+    <section class="py-1 text-center container">
+        <div class="row py-lg-1">
+            <div class="col-lg-6 col-md-8 mx-auto"><h1 class="fw-light">Каталог продуктов</h1>
+                <p class="lead text-body-secondary">Смотрите подробнее о наших продуктах!</p>
+                <p>
+                    <a href="{% url 'catalog:product_create' %}" class="btn btn-primary my-2">Добавить продукт в каталог</a>
+                    <a href="#" class="btn btn-secondary my-2">Кнопка</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
     <h3>Список продуктов:</h3>
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
@@ -23,6 +35,12 @@
                                 <div class="btn-group">
                                     <a href="{% url 'catalog:product_detail' product.pk %}">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Посмотреть</button>
+                                    </a>
+                                    <a href="{% url 'catalog:product_update' product.pk %}">
+                                        <button type="button" class="btn btn-sm btn-primary">Редактировать</button>
+                                    </a>
+                                    <a href="{% url 'catalog:product_delete' product.pk %}">
+                                        <button type="button" class="btn btn-sm btn-danger">Удалить</button>
                                     </a>
                                 </div>
                                 <small class="text-body-secondary">Есть</small></div>
