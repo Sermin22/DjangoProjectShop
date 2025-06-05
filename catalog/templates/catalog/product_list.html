@@ -36,10 +36,12 @@
                                     <a href="{% url 'catalog:product_detail' product.pk %}">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Посмотреть</button>
                                     </a>
-                                    <a href="{% url 'catalog:product_update' product.pk %}">
-                                        <button type="button" class="btn btn-sm btn-primary">Редактировать</button>
-                                    </a>
-                                    {% if perms.catalog.delete_product %}
+                                    {% if user == product.owner or perms.catalog.can_unpublish_product %}
+                                        <a href="{% url 'catalog:product_update' product.pk %}">
+                                            <button type="button" class="btn btn-sm btn-primary">Редактировать</button>
+                                        </a>
+                                    {% endif %}
+                                    {% if user == product.owner or perms.catalog.delete_product %}
                                         <a href="{% url 'catalog:product_delete' product.pk %}">
                                             <button type="button" class="btn btn-sm btn-danger">Удалить</button>
                                         </a>
