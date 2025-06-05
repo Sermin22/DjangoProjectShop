@@ -37,6 +37,10 @@ class Product(models.Model):
         decimal_places=2,
         help_text='Укажите цену закупки',
     )
+    is_published = models.BooleanField(
+        verbose_name="Опубликовано",
+        default=False,
+    )
     created_at = models.DateField(auto_now_add=True)  # Дата создания
     updated_at = models.DateTimeField(auto_now=True)  # Дата последнего изменения
 
@@ -47,6 +51,9 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["category", "name"]
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+        ]
 
 
 class Category(models.Model):

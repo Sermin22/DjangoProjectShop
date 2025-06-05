@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import ProductForm
@@ -66,6 +67,8 @@ class ProductListView(ListView):
     template_name = 'catalog/product_list.html'  # можно не указывать, это стандартный путь
     context_object_name = 'product_list'  # можно не указывать, если использовать это
     # стандартное название в шаблоне 'product_list' или 'object_list'
+    def get_queryset(self):
+        return Product.objects.filter(is_published=True)
 
 # def product_list(request):
 #     products = Product.objects.all()
@@ -100,11 +103,25 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('catalog:product_detail', kwargs={'pk': self.object.pk})
         # или args=[self.kwargs.get('pk')]
 
+    def form_valid(self, form):
+        # Проверка: если пользователь пытается снять публикацию
+        if not self.request.user.has_perm('catalog.can_unpublish_product'):
+            # Получаем исходное состояние объекта до обновления
+            original = self.get_object()
+            new_is_published = form.cleaned_data.get('is_published')
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+            # Если пытается изменить статус публикации с True на False — запретить
+            if original.is_published and new_is_published is False:
+                raise PermissionDenied("У вас нет прав снимать продукт с публикации.")
+
+        return super().form_valid(form)
+
+
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     model = Product
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('catalog:product_list')
+    permission_required = 'catalog.delete_product'
 
 
 class ContactInfoListView(ListView):
