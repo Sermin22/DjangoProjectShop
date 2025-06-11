@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import TextField, SET_NULL
+from users.models import CustomUser
 
 
 class Product(models.Model):
@@ -37,8 +38,20 @@ class Product(models.Model):
         decimal_places=2,
         help_text='Укажите цену закупки',
     )
+    is_published = models.BooleanField(
+        verbose_name="Опубликовано",
+        default=False,
+    )
     created_at = models.DateField(auto_now_add=True)  # Дата создания
     updated_at = models.DateTimeField(auto_now=True)  # Дата последнего изменения
+
+    owner = models.ForeignKey(
+        CustomUser,
+        verbose_name='Владелец',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
 
     def __str__(self):
         return f"Продукт: {self.name} из категории: {self.category}"
@@ -47,6 +60,9 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["category", "name"]
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+        ]
 
 
 class Category(models.Model):

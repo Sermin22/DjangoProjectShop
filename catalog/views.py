@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import ProductForm
@@ -67,6 +68,9 @@ class ProductListView(ListView):
     context_object_name = 'product_list'  # можно не указывать, если использовать это
     # стандартное название в шаблоне 'product_list' или 'object_list'
 
+    def get_queryset(self):
+        return Product.objects.filter(is_published=True)
+
 # def product_list(request):
 #     products = Product.objects.all()
 #     context = {"products": products}
@@ -90,6 +94,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:product_list')
 
+    def form_valid(self, form):
+        # При создании продукта автоматически привязываем его к авторизованному пользователю.
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
@@ -100,11 +112,42 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('catalog:product_detail', kwargs={'pk': self.object.pk})
         # или args=[self.kwargs.get('pk')]
 
+    def form_valid(self, form):
+        product = self.get_object()
+        user = self.request.user
+
+        # Если пользователь — владелец, разрешить всё
+        if product.owner == user:
+            return super().form_valid(form)
+
+        # Если пользователь не владелец, но имеет право снимать с публикации
+        if user.has_perm('catalog.can_unpublish_product'):
+            # Проверяем, хочет ли он изменить только флаг публикации
+            new_is_published = form.cleaned_data.get('is_published')
+            # Если флаг публикации изменяется (с True на False) и больше ничего, то разрешаем
+            if (product.is_published and new_is_published is False
+                    and form.changed_data == ['is_published']):
+                return super().form_valid(form)
+            # Иначе — запрещаем
+            raise PermissionDenied("Вы можете только отменить публикацию продукта.")
+        # Ни владелец, ни модератор — запрет
+        raise PermissionDenied("Вы не можете редактировать этот продукт.")
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('catalog:product_list')
+
+    def delete(self, request, *args, **kwargs):
+        product = self.get_object()
+        user = request.user
+
+        # Разрешено: если пользователь — владелец или имеет разрешение
+        if user != product.owner and not user.has_perm('catalog.delete_product'):
+            raise PermissionDenied("Вы не можете удалить этот продукт.")
+
+        return super().delete(request, *args, **kwargs)
 
 
 class ContactInfoListView(ListView):
