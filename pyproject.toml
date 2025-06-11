@@ -14,6 +14,7 @@ psycopg2 = "^2.9.10"
 django = "^5.2"
 pillow = "^11.2.1"
 ipython = "^9.2.0"
+redis = "^6.2.0"
 
 
 [tool.poetry.group.dev.dependencies]

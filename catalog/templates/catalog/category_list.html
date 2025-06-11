@@ -2,7 +2,7 @@
 
 {% load catalog_tags %}
 
-{% block title %}Каталог продуктов{% endblock %}
+{% block title %}Категории продуктов{% endblock %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
 
     <section class="py-1 text-center container">
         <div class="row py-lg-1">
-            <div class="col-lg-6 col-md-8 mx-auto"><h1 class="fw-light">Каталог продуктов</h1>
+            <div class="col-lg-6 col-md-8 mx-auto"><h1 class="fw-light">Категории продуктов</h1>
                 <p class="lead text-body-secondary">Смотрите подробнее о наших продуктах!</p>
                 <p>
                     <a href="{% url 'catalog:product_create' %}" class="btn btn-primary my-2">Добавить продукт в каталог</a>
@@ -20,32 +20,21 @@
         </div>
     </section>
 
-    <h3>Список продуктов:</h3>
+    <h3>Список категорий продуктов:</h3>
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for product in product_list %}
+                {% for category in category_list %}
                 <div class="col">
                     <div class="card shadow-sm h-100 d-flex flex-column">
-                        <img src="{{ product.photo | media_filter }}" alt="{{ product.name }}" class="card-img-top">
                         <div class="card-body">
-                            <p class="card-text fw-bold mb-1">{{ product.name }}</p>
-                            <p class="card-text">{{ product.description | truncatechars:100 }}</p>
+                            <p class="card-text fw-bold mb-1">{{ category.name }}</p>
+                            <p class="card-text">{{ category.description }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="{% url 'catalog:product_detail' product.pk %}">
+                                    <a href="{% url 'catalog:products_by_category' category.pk %}">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Посмотреть</button>
                                     </a>
-                                    {% if user == product.owner or perms.catalog.can_unpublish_product %}
-                                        <a href="{% url 'catalog:product_update' product.pk %}">
-                                            <button type="button" class="btn btn-sm btn-primary">Редактировать</button>
-                                        </a>
-                                    {% endif %}
-                                    {% if user == product.owner or perms.catalog.delete_product %}
-                                        <a href="{% url 'catalog:product_delete' product.pk %}">
-                                            <button type="button" class="btn btn-sm btn-danger">Удалить</button>
-                                        </a>
-                                    {% endif %}
                                 </div>
                                 <small class="text-body-secondary">Есть</small>
                             </div>
