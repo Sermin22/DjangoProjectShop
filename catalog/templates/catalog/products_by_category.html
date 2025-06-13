@@ -2,7 +2,7 @@
 
 {% load catalog_tags %}
 
-{% block title %}Каталог продуктов{% endblock %}
+{% block title %}Продукты по категории{% endblock %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
 
     <section class="py-1 text-center container">
         <div class="row py-lg-1">
-            <div class="col-lg-6 col-md-8 mx-auto"><h1 class="fw-light">Каталог продуктов</h1>
+            <div class="col-lg-6 col-md-8 mx-auto"><h1 class="fw-light">Продукты в категории {{ category.name }}</h1>
                 <p class="lead text-body-secondary">Смотрите подробнее о наших продуктах!</p>
                 <p>
                     <a href="{% url 'catalog:product_create' %}" class="btn btn-primary my-2">Добавить продукт в каталог</a>
@@ -20,11 +20,12 @@
         </div>
     </section>
 
-    <h3>Список продуктов:</h3>
+    <h3>Список {{ category.name }}:</h3>
+    <p>{{ category.description }}</p>
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for product in product_list %}
+                {% for product in products_by_category %}
                 <div class="col">
                     <div class="card shadow-sm h-100 d-flex flex-column">
                         <img src="{{ product.photo | media_filter }}" alt="{{ product.name }}" class="card-img-top">
@@ -47,13 +48,17 @@
                                         </a>
                                     {% endif %}
                                 </div>
-                                <small class="text-body-secondary">Есть</small>
-                            </div>
+                                <small class="text-body-secondary">Есть</small></div>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
+    </div>
+    <div class="btn-group">
+        <a href="{% url 'catalog:category_list' %}">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Назад к списку категорий</button>
+        </a>
     </div>
 {% endblock %}

@@ -1,13 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from config.settings import CACHE_ENABLED
 from .forms import ProductForm
-from .models import Product, ContactInfo
+from .models import Product, Category, ContactInfo
 from django.views.generic import TemplateView
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.core.cache import cache
+from .services import get_products_by_category
+
+
 # from django.shortcuts import get_object_or_404
 
 
@@ -69,7 +74,16 @@ class ProductListView(ListView):
     # стандартное название в шаблоне 'product_list' или 'object_list'
 
     def get_queryset(self):
-        return Product.objects.filter(is_published=True)
+        if not CACHE_ENABLED:
+            return Product.objects.filter(is_published=True)
+        # Получаем данные из кеша. Если кеш пуст, то получает данные из БД
+        key = "products"
+        products = cache.get(key)
+        if products is not None:
+            return products
+        products = Product.objects.filter(is_published=True)
+        cache.set(key, products, 20)
+        return products
 
 # def product_list(request):
 #     products = Product.objects.all()
@@ -148,6 +162,27 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
             raise PermissionDenied("Вы не можете удалить этот продукт.")
 
         return super().delete(request, *args, **kwargs)
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'catalog/category_list.html'  # можно не указывать, это стандартный путь
+    context_object_name = 'category_list'  # можно не указывать, если использовать это
+    # стандартное название в шаблоне 'сategory_list' или 'object_list'
+
+
+class ProductsByCategoryView(ListView):
+    template_name = 'catalog/products_by_category.html'
+    context_object_name = 'products_by_category'
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, id=self.kwargs.get('pk'))
+        return get_products_by_category(self.category.id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
 
 
 class ContactInfoListView(ListView):
