@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "ru"
 
-'Europe/Moscow'  # Изменил
+TIME_ZONE = 'Europe/Moscow'  # Изменил
 
 USE_I18N = True
 USE_L18N = True  # Добавил
